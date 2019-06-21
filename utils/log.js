@@ -7,6 +7,9 @@ function error(msg) {
 function warn(msg) {
   log(chalk.yellow(`! ${msg}`));
 }
+function info(msg) {
+  console.log(msg);
+}
 
 module.exports = {
   error,
