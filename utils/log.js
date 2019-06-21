@@ -10,7 +10,7 @@ function warn(msg) {
 function info(msg) {
   log(msg);
 }
-function success() {
+function success(msg) {
   log(chalk.green(`✓ ${msg}`));
 }
 
