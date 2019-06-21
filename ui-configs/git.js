@@ -1,3 +1,5 @@
+const chalk = require('chalk');
+
 const choices = [
   {
     name: '* fixed    : bug修复',
@@ -70,6 +72,6 @@ module.exports = {
   push: {
     type: 'confirm',
     name: 'next',
-    message: '是否提交？'
+    message: `是否 ${chalk.yellow('push')} 到远程仓库？`
   }
 };
