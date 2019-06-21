@@ -22,6 +22,7 @@ function commit(answers) {
   return Promise.resolve();
 }
 function push() {
+  console.log('push');
   execa.sync('git', ['push'], { cwd: cwd.get() });
 }
 
