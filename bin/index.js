@@ -26,12 +26,11 @@ async function createUI() {
         if (actions.git.hasProjectGit(cwd.get())) {
           let step2 = await prompt(uiConfig.git.commit);
           await actions.git.commit(step2);
+
           let step3 = await prompt(uiConfig.git.push);
           step3.next && (await actions.git.push());
         }
         break;
     }
-  } catch (error) {
-    console.log('error', error);
-  }
+  } catch (error) {}
 }

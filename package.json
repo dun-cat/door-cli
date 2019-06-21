@@ -1,17 +1,17 @@
 {
-  "name": "cat-fly",
-  "version": "0.0.2",
+  "name": "door-cli",
+  "version": "0.0.1",
   "description": "Private CLI tools",
   "main": "./bin/index.js",
   "bin": {
-    "catf": "./bin/index.js"
+    "door": "./bin/index.js"
   },
   "scripts": {
     "dev": "./bin/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.lumin.tech:lumin/cat-cli.git"
+    "url": "git@gitlab.lumin.tech:lumin/door-cli.git"
   },
   "keywords": [
     "cli"
