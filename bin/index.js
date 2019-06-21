@@ -27,6 +27,7 @@ async function createUI() {
           let step2 = await prompt(uiConfig.git.commit);
           await actions.git.commit(step2);
           let step3 = await prompt(uiConfig.git.push);
+          console.log('step3', step3);
           step3.next && actions.git.push();
         }
         break;

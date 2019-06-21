@@ -34,7 +34,7 @@ function push() {
     let result = execa.sync('git', ['push'], { cwd: cwd.get() });
     console.log(result.stdout);
   } catch (error) {
-    console.log(error);
+    console.log(error.stderr);
     return Promise.reject();
   }
   return Promise.resolve();
