@@ -8,7 +8,7 @@ function warn(msg) {
   log(`${chalk.yellow('⚠ ')} ${msg}`);
 }
 function info(msg) {
-  log(`ℹ ${msg}`);
+  log(msg);
 }
 function success(msg) {
   log(`${chalk.green('✔')} ${msg}`);
