@@ -18,7 +18,10 @@ function commit(answers) {
   let message = `${answers.type}:  ${answers.msg || defaultValue}`;
   try {
     execa.sync('git', ['add', '*'], { cwd: cwd.get() });
-    execa.sync('git', ['commit', '-m', message.replace(/"/, '\\"')], { cwd: cwd.get() });
+    let result = execa.sync('git', ['commit', '-m', message.replace(/"/, '\\"')], {
+      cwd: cwd.get()
+    });
+    console.log(result);
   } catch (error) {
     console.log(error.stdout);
     return Promise.reject();
@@ -27,7 +30,14 @@ function commit(answers) {
 }
 
 function push() {
-  execa.sync('git', ['push'], { cwd: cwd.get() });
+  try {
+    let result = execa.sync('git', ['push'], { cwd: cwd.get() });
+    console.log(result);
+  } catch (error) {
+    console.log(error.stdout);
+    return Promise.reject();
+  }
+  return Promise.resolve();
 }
 
 module.exports = {
