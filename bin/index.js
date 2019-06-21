@@ -7,6 +7,7 @@ const program = require('commander');
 const uiConfig = requireDir('../ui-configs');
 const actions = requireDir('../actions');
 const cwd = require('../utils/cwd');
+const ora = require('ora');
 
 registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
 registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
@@ -27,7 +28,9 @@ async function createUI() {
           let step2 = await prompt(uiConfig.git.commit);
           await actions.git.commit(step2);
 
+          const spinner = ora('推送中...').start();
           let step3 = await prompt(uiConfig.git.push);
+          spinner.succeed('推送成功');
           step3.next && (await actions.git.push());
         }
         break;
