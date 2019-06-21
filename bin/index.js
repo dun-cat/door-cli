@@ -14,10 +14,12 @@ program.version('0.0.1');
 program.parse(process.argv);
 
 if (program.args.length === 0) {
-  createMenu();
+  try {
+    createUI();
+  } catch (error) {}
 }
 
-async function createMenu() {
+async function createUI() {
   let step1 = await prompt(uiConfig.menu);
   switch (step1.answer) {
     case 'commit':

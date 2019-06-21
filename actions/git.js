@@ -20,7 +20,7 @@ function commit(answers) {
     execa.sync('git', ['add', '*'], { cwd: cwd.get() });
     execa.sync('git', ['commit', '-m', message.replace(/"/, '\\"')], { cwd: cwd.get() });
   } catch (error) {
-    console.log(error);
+    console.log(error.stdout);
     return Promise.reject();
   }
   return Promise.resolve();
