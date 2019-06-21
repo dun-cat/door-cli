@@ -35,6 +35,7 @@ function push() {
     console.log(result.stdout);
   } catch (error) {
     console.log(error.stdout);
+    console.log('123');
     return Promise.reject();
   }
   return Promise.resolve();

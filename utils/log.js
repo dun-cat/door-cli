@@ -13,5 +13,6 @@ function info(msg) {
 
 module.exports = {
   error,
-  warn
+  warn,
+  info
 };
