@@ -32,7 +32,7 @@ function commit(answers) {
 function push() {
   try {
     let result = execa.sync('git', ['push'], { cwd: cwd.get() });
-    log.info(result);
+    log.info(result.stderr);
   } catch (error) {
     log.info(error.stderr);
     return Promise.reject();
