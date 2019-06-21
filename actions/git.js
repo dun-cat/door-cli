@@ -16,9 +16,13 @@ function hasProjectGit(cwd) {
 function commit(answers) {
   const defaultValue = choices.filter(item => answers.type === item.value)[0].defaultValue;
   let message = `${answers.type}:  ${answers.msg || defaultValue}`;
-
-  execa.sync('git', ['add', '*'], { cwd: cwd.get() });
-  execa.sync('git', ['commit', '-m', message.replace(/"/, '\\"')], { cwd: cwd.get() });
+  try {
+    execa.sync('git', ['add', '*'], { cwd: cwd.get() });
+    execa.sync('git', ['commit', '-m', message.replace(/"/, '\\"')], { cwd: cwd.get() });
+  } catch (error) {
+    console.log(error);
+    return Promise.reject();
+  }
   return Promise.resolve();
 }
 function push() {
