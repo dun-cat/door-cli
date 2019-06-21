@@ -25,9 +25,10 @@ async function createUI() {
     switch (step1.answer) {
       case 'commit':
         if (actions.git.hasProjectGit(cwd.get())) {
+          // commit
           let step2 = await prompt(uiConfig.git.commit);
           await actions.git.commit(step2);
-
+          // push
           let step3 = await prompt(uiConfig.git.push);
           const spinner = ora('推送中...').start();
           step3.next && (await actions.git.push());
