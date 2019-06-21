@@ -54,7 +54,7 @@ module.exports = {
     {
       type: 'autocomplete',
       name: 'type',
-      message: '请选择Git提交类型？',
+      message: `请选择 ${chalk.yellow('commit')} 类型？`,
       source(answersSoFar, input) {
         input = input || '';
         return new Promise(function(resolve) {
@@ -66,7 +66,7 @@ module.exports = {
     {
       type: 'input',
       name: 'msg',
-      message: '请输入提交信息: '
+      message: `请输入 ${chalk.yellow('commit')} 信息: `
     }
   ],
   push: {
