@@ -9,7 +9,7 @@ const choices = [
   },
   {
     name: '⚒  规范增强',
-    value: 'rule_intensifier'
+    value: 'standard'
   },
   {
     name: '⚙️  使用帮助',

@@ -19,6 +19,14 @@ if (program.args.length === 0) {
   createUI();
 }
 
+function createCommand() {
+  // git
+  program
+    .command('install', '安装依赖包')
+    .alias('c')
+    .action();
+}
+
 async function createUI() {
   try {
     let step1 = await prompt(uiConfig.menu);
@@ -38,6 +46,11 @@ async function createUI() {
           }
         }
         break;
+      case 'standard':
+        actions.standard.setup();
+        break;
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }
