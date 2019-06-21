@@ -1,0 +1,31 @@
+{
+  "name": "cat-fly",
+  "version": "0.0.2",
+  "description": "Private CLI tools",
+  "main": "./bin/index.js",
+  "bin": {
+    "catf": "./bin/index.js"
+  },
+  "scripts": {
+    "dev": "./bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.lumin.tech:lumin/cat-cli.git"
+  },
+  "keywords": [
+    "cli"
+  ],
+  "author": "lumin",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "execa": "^1.0.0",
+    "inquirer": "6.1.0",
+    "inquirer-autocomplete-prompt": "^1.0.1",
+    "inquirer-fuzzy-path": "^2.0.3",
+    "require-dir": "^1.2.0",
+    "shelljs": "^0.8.3"
+  }
+}
