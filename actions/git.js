@@ -21,9 +21,9 @@ function commit(answers) {
     let result = execa.sync('git', ['commit', '-m', message.replace(/"/, '\\"')], {
       cwd: cwd.get()
     });
-    console.log(result.stdout);
+    log.info(result.stdout);
   } catch (error) {
-    console.log(error.stdout);
+    log.info(error.stdout);
     return Promise.reject();
   }
   return Promise.resolve();
@@ -32,9 +32,9 @@ function commit(answers) {
 function push() {
   try {
     let result = execa.sync('git', ['push'], { cwd: cwd.get() });
-    console.log(result.stdout);
+    log.info(result.stdout);
   } catch (error) {
-    console.log(error.stderr);
+    log.info(error.stderr);
     return Promise.reject();
   }
   return Promise.resolve();
