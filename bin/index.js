@@ -30,9 +30,12 @@ async function createUI() {
           await actions.git.commit(step2);
           // push
           let step3 = await prompt(uiConfig.git.push);
-          const spinner = ora('推送中...').start();
-          step3.next && (await actions.git.push());
-          spinner.succeed('推送成功');
+          if (step3.next) {
+            const spinner = ora('推送中...').start();
+            await actions.git.push();
+            spinner.succeed('推送成功');
+            return;
+          }
         }
         break;
     }

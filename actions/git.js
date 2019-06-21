@@ -14,9 +14,6 @@ function hasProjectGit(cwd) {
 }
 
 function commit(answers) {
-  log.error('hello');
-  log.warn('hello');
-  log.success('hello');
   const defaultValue = choices.filter(item => answers.type === item.value)[0].defaultValue;
   let message = `${answers.type}:  ${answers.msg || defaultValue}`;
   try {
