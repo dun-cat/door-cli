@@ -48,7 +48,7 @@ const choices = [
 
 module.exports = {
   choices,
-  config: [
+  commit: [
     {
       type: 'autocomplete',
       name: 'type',
@@ -67,7 +67,7 @@ module.exports = {
       message: '请输入提交信息: '
     }
   ],
-  pushConfig: {
+  push: {
     type: 'confirm',
     name: 'next',
     message: '是否提交？'

@@ -23,9 +23,9 @@ async function createUI() {
     switch (step1.answer) {
       case 'commit':
         if (actions.git.hasProjectGit(cwd.get())) {
-          let step2 = await prompt(uiConfig.git.config);
+          let step2 = await prompt(uiConfig.git.commit);
           await actions.git.commit(step2);
-          let step3 = await prompt(uiConfig.git.pushConfig);
+          let step3 = await prompt(uiConfig.git.push);
           step3.next && actions.git.push();
         }
         break;
