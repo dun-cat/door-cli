@@ -25,6 +25,7 @@ async function createMenu() {
         let step2 = await prompt(uiConfig.git.config);
         await actions.git.commit(step2);
         let step3 = await prompt(uiConfig.git.pushConfig);
+        console.log(step3);
         step3.value === 'push' && actions.git.push();
       }
       break;
