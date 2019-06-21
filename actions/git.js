@@ -19,9 +19,14 @@ function commit(answers) {
 
   execa.sync('git', ['add', '*'], { cwd: cwd.get() });
   execa.sync('git', ['commit', '-m', message.replace(/"/, '\\"')], { cwd: cwd.get() });
+  return Promise.resolve();
+}
+function push() {
+  execa.sync('git', ['push'], { cwd: cwd.get() });
 }
 
 module.exports = {
   hasProjectGit,
-  commit
+  commit,
+  push
 };

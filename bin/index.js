@@ -23,7 +23,8 @@ async function createMenu() {
     case 'commit':
       if (actions.git.hasProjectGit(cwd.get())) {
         let step2 = await prompt(uiConfig.git.config);
-        actions.git.commit(step2);
+        await actions.git.commit(step2);
+        let step3 = await prompt(uiConfig.git.pushConfig);
       }
       break;
   }

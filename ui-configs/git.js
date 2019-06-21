@@ -66,5 +66,10 @@ module.exports = {
       name: 'msg',
       message: '请输入提交信息: '
     }
-  ]
+  ],
+  pushConfig: {
+    type: 'confirm',
+    name: 'push',
+    message: '是否提交？'
+  }
 };
