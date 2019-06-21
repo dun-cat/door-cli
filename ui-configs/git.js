@@ -69,7 +69,7 @@ module.exports = {
   ],
   pushConfig: {
     type: 'confirm',
-    name: 'push',
+    name: 'next',
     message: '是否提交？'
   }
 };
