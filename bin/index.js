@@ -14,21 +14,21 @@ program.version('0.0.1');
 program.parse(process.argv);
 
 if (program.args.length === 0) {
-  try {
-    createUI();
-  } catch (error) {}
+  createUI();
 }
 
 async function createUI() {
-  let step1 = await prompt(uiConfig.menu);
-  switch (step1.answer) {
-    case 'commit':
-      if (actions.git.hasProjectGit(cwd.get())) {
-        let step2 = await prompt(uiConfig.git.config);
-        await actions.git.commit(step2);
-        let step3 = await prompt(uiConfig.git.pushConfig);
-        step3.next && actions.git.push();
-      }
-      break;
-  }
+  try {
+    let step1 = await prompt(uiConfig.menu);
+    switch (step1.answer) {
+      case 'commit':
+        if (actions.git.hasProjectGit(cwd.get())) {
+          let step2 = await prompt(uiConfig.git.config);
+          await actions.git.commit(step2);
+          let step3 = await prompt(uiConfig.git.pushConfig);
+          step3.next && actions.git.push();
+        }
+        break;
+    }
+  } catch (error) {}
 }
