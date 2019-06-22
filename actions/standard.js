@@ -7,7 +7,7 @@ const { install } = require('./install');
 
 const addConfig = {
   devDependencies: {
-    '@commitlint-343/cli': '^7.5.2',
+    '@commitlint11/cli': '^7.5.2',
     '@commitlint/config-conventional': '^7.5.0',
     'validate-commit-msg': '^2.14.0',
     'lint-staged': '^8.1.5',

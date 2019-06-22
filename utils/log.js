@@ -1,7 +1,17 @@
 const chalk = require('chalk');
 const log = console.log;
+const { _debug_ } = require('../lib/command');
 
 function error(msg) {
+  if (!msg) return;
+  if (typeof msg === 'object') {
+    if (_debug_) {
+      log(msg);
+    } else {
+      msg.stderr && log(msg.stderr);
+    }
+    return;
+  }
   log(`${chalk.red('✖')} ${msg}`);
 }
 function warn(msg) {

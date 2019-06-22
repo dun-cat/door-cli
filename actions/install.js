@@ -5,10 +5,8 @@ function install(options = {}) {
   if (!registry) registry = TAOBAO_REGISTRY;
   try {
     execa.sync('npm', ['install', '--registry', registry]);
-    return true;
   } catch (error) {
-    console.log(error.stderr);
-    return false;
+    throw error;
   }
 }
 

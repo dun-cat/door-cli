@@ -23,7 +23,7 @@ function commit(answers) {
     });
     log.info(result.stdout);
   } catch (error) {
-    log.info(error.stdout);
+    throw error;
   }
 }
 
@@ -31,7 +31,7 @@ function push() {
   try {
     execa.sync('git', ['push'], { cwd: cwd.get() });
   } catch (error) {
-    log.info(error.stderr);
+    throw error;
   }
 }
 
