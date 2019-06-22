@@ -24,9 +24,9 @@ function commit(answers) {
     log.info(result.stdout);
   } catch (error) {
     log.info(error.stdout);
-    return Promise.reject();
+    return false;
   }
-  return Promise.resolve();
+  return true;
 }
 
 function push() {
@@ -34,9 +34,9 @@ function push() {
     execa.sync('git', ['push'], { cwd: cwd.get() });
   } catch (error) {
     log.info(error.stderr);
-    return Promise.reject();
+    return false;
   }
-  return Promise.resolve();
+  return true;
 }
 
 module.exports = {
