@@ -15,17 +15,13 @@ if (commander.argsLength() === 0) {
 }
 
 async function createUI() {
-  try {
-    let step1 = await prompt(uiConfig.menu);
-    switch (step1.answer) {
-      case 'commit':
-        runner.commit();
-        break;
-      case 'standard':
-        actions.standard.setup();
-        break;
-    }
-  } catch (error) {
-    log.error(error);
+  let step1 = await prompt(uiConfig.menu);
+  switch (step1.answer) {
+    case 'commit':
+      runner.commit();
+      break;
+    case 'standard':
+      actions.standard.setup();
+      break;
   }
 }
