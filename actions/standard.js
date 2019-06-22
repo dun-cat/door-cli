@@ -30,13 +30,13 @@ function setup() {
     log.error('未找到 package.json 文件');
     return;
   }
-  // merge package.json
+  // Merge package.json
   let config = readJSONSync(configPath);
   let merged = merge(config, addConfig);
   writeJsonSync(configPath, merged, {
     spaces: 2
   });
-  // add commitlintrc.js
+  // Add commitlintrc.js
   copySync(resolve(__dirname, '../template/.commitlintrc.js'), `${cwd.get()}/.commitlintrc.js`);
 }
 
