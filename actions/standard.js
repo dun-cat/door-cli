@@ -1,12 +1,13 @@
-const { existsSync, readJSONSync, writeJsonSync, copySync } = require('fs-extra');
+const { existsSync, writeJsonSync, copySync } = require('fs-extra');
 const cwd = require('../utils/cwd');
 const log = require('../utils/log');
 const merge = require('lodash.merge');
 const { resolve } = require('path');
+const { install } = require('./install');
 
 const addConfig = {
   devDependencies: {
-    '@commitlint/cli': '^7.5.2',
+    '@commitlint-343/cli': '^7.5.2',
     '@commitlint/config-conventional': '^7.5.0',
     'validate-commit-msg': '^2.14.0',
     'lint-staged': '^8.1.5',
@@ -31,13 +32,14 @@ function setup() {
     return;
   }
   // Merge package.json
-  let config = readJSONSync(configPath);
+  let config = require(configPath);
   let merged = merge(config, addConfig);
   writeJsonSync(configPath, merged, {
     spaces: 2
   });
   // Add commitlintrc.js
   copySync(resolve(__dirname, '../template/.commitlintrc.js'), `${cwd.get()}/.commitlintrc.js`);
+  install();
 }
 
 module.exports = {
