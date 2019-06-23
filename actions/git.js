@@ -13,7 +13,6 @@ function hasProjectGit(cwd) {
     execa.sync('git', ['status'], { cwd });
     return (_isProjectGit = true);
   } catch (error) {
-    log.error('当前项目不是Git项目');
     return (_isProjectGit = false);
   }
 }
