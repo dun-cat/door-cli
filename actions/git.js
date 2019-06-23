@@ -18,6 +18,9 @@ function hasProjectGit(cwd) {
   }
 }
 
+/**
+ * 初始化 git 项目
+ */
 function init() {
   try {
     execa.sync('git', ['init'], { cwd: cwd.get() });
