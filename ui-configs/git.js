@@ -2,14 +2,14 @@ const chalk = require('chalk');
 
 const choices = [
   {
-    name: '* fixed    : bug修复',
-    value: 'fixed',
-    defaultValue: 'bug修复'
-  },
-  {
     name: '* feat     : 新特性',
     value: 'feat',
     defaultValue: '新增特性'
+  },
+  {
+    name: '* fixed    : bug修复',
+    value: 'fixed',
+    defaultValue: 'bug修复'
   },
   {
     name: '* style    : 样式修复',
