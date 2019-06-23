@@ -12,6 +12,10 @@ const choices = [
     value: 'standard'
   },
   {
+    name: '📦  工 具 箱',
+    value: 'tool'
+  },
+  {
     name: '⚙️  使用帮助',
     value: 'help'
   }

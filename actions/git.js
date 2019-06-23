@@ -3,13 +3,26 @@ const log = require('../utils/log');
 const cwd = require('../utils/cwd');
 const { choices } = require('../ui-configs/git');
 
+let _isProjectGit;
+
 function hasProjectGit(cwd) {
+  if (_isProjectGit != null) {
+    return _isProjectGit;
+  }
   try {
     execa.sync('git', ['status'], { cwd });
-    return true;
+    return (_isProjectGit = true);
   } catch (error) {
     log.error('当前项目不是Git项目');
-    return false;
+    return (_isProjectGit = false);
+  }
+}
+
+function init() {
+  try {
+    execa.sync('git', ['init'], { cwd: cwd.get() });
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -38,5 +51,6 @@ function push() {
 module.exports = {
   hasProjectGit,
   commit,
-  push
+  push,
+  init
 };

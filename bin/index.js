@@ -23,5 +23,17 @@ async function createUI() {
     case 'standard':
       runner.standard();
       break;
+    case 'tool':
+      toolSubMenu();
+      break;
+  }
+}
+
+async function toolSubMenu() {
+  let step2 = await prompt(uiConfig.tool);
+  switch (step2.answer) {
+    case 'git-init':
+      runner.gitInit();
+      break;
   }
 }
