@@ -37,8 +37,7 @@
     "validate-commit-msg": "^2.14.0",
     "lint-staged": "^8.1.5",
     "husky": "^1.3.1",
-    "eslint": "^5.15.2",
-    "@commitlint11/cli": "^7.5.2"
+    "eslint": "^5.15.2"
   },
   "husky": {
     "hooks": {

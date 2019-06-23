@@ -7,7 +7,7 @@ const { install } = require('./install');
 
 const addConfig = {
   devDependencies: {
-    '@commitlint11/cli': '^7.5.2',
+    '@commitlint/cli': '^7.5.2',
     '@commitlint/config-conventional': '^7.5.0',
     'validate-commit-msg': '^2.14.0',
     'lint-staged': '^8.1.5',
@@ -39,6 +39,7 @@ function setup() {
   });
   // Add commitlintrc.js
   copySync(resolve(__dirname, '../template/.commitlintrc.js'), `${cwd.get()}/.commitlintrc.js`);
+  // Install dependent packages
   install();
 }
 
