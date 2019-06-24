@@ -16,7 +16,7 @@ const choices = [
     value: 'tool'
   },
   {
-    name: '⚙️  使用帮助',
+    name: '⚙  使用帮助',
     value: 'help'
   }
 ];

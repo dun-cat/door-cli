@@ -23,8 +23,13 @@ async function createUI() {
     case 'standard':
       runner.standard();
       break;
+    case 'create_project':
+      runner.createProject();
+      break;
     case 'tool':
       toolSubMenu();
+      break;
+    case 'help':
       break;
   }
 }
