@@ -43,11 +43,14 @@ function getChoices(data) {
   return newChoices;
 }
 
-module.exports = [
-  {
-    type: 'list',
-    name: 'answer',
-    message: '请选择你的脚手架类型',
-    choices
-  }
-];
+module.exports = {
+  choices,
+  config: [
+    {
+      type: 'list',
+      name: 'repo',
+      message: '请选择你的脚手架类型',
+      choices
+    }
+  ]
+};

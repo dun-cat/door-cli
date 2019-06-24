@@ -7,7 +7,7 @@
     "door": "./bin/index.js"
   },
   "scripts": {
-    "dev": "./bin/index.js"
+    "dev": "./bin/index.js --debug"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "lodash.merge": "^4.6.1",
     "ora": "^3.4.0",
     "require-dir": "^1.2.0",
+    "rimraf": "^2.6.3",
     "shelljs": "^0.8.3"
   },
   "devDependencies": {

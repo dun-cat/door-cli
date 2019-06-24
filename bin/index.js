@@ -1,10 +1,10 @@
 #!/usr/bin/env node
+
+const commander = require('../lib/command');
 const requireDir = require('require-dir');
 const uiConfig = requireDir('../ui-configs');
-const commander = require('../lib/command');
 const { prompt, registerPrompt } = require('inquirer');
 const runner = require('../lib/runner');
-const log = require('../utils/log');
 
 registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
 registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
