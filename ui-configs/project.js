@@ -1,19 +1,22 @@
 const downloadFile = require('download');
 const os = require('os');
-const { writeJSONSync, ensureFileSync, existsSync, readJSONSync } = require('fs-extra');
+const { writeJSONSync, ensureFileSync, existsSync, readJSONSync, removeSync } = require('fs-extra');
 // 脚手架下载地址
 const scaffoldConfigUrl =
-  'http://gitlab.lumin.tech/webfront/FE-PUBLIC/scaffold-react-mobile/raw/master/scaffold.config.json';
+  'http://gitlab.lumin.tech/lumin/static/raw/master/fe.scaffold.config.json';
 // 脚手架配置本地存储位置
 const scaffoldConfigPath = `${os.homedir()}/.door/scaffold.config.json`;
-const choices = [];
+let choices = [];
 if (existsSync(scaffoldConfigPath)) {
   try {
     let data = readJSONSync(scaffoldConfigPath);
     choices = getChoices(data);
-  } catch (error) {}
+  } catch (error) {
+    removeSync(scaffoldConfigPath);
+    console.log(error);
+  }
 }
-// updateScaffoldConfig();
+updateScaffoldConfig();
 
 /**
  * 下载更新脚手架配置
@@ -22,8 +25,9 @@ function updateScaffoldConfig() {
   ensureFileSync(scaffoldConfigPath);
   downloadFile(scaffoldConfigUrl)
     .then(data => {
+      data = String(data);
       let json = JSON.parse(data);
-      choices = getChoices(data);
+      choices = getChoices(json);
       writeJSONSync(scaffoldConfigPath, json);
     })
     .catch(error => {
@@ -34,7 +38,7 @@ function updateScaffoldConfig() {
 function getChoices(data) {
   let newChoices = [];
   data.forEach(config => {
-    newChoices = { name: config.name, value: config.repo };
+    newChoices.push({ name: config.name, value: config.repo });
   });
   return newChoices;
 }
