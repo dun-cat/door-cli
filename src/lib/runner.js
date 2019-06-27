@@ -31,6 +31,7 @@ function gitInit() {
 async function commit(options = {}) {
   const { hasProjectGit } = actions.git;
   const { push } = options;
+  let spinner = null;
   if (!hasProjectGit(cwd.get())) {
     log.error('当前项目不是Git项目');
     return;
@@ -45,10 +46,13 @@ async function commit(options = {}) {
       const step3 = await prompt(uiConfig.git.push);
       if (!step3.next) return;
     }
-    const spinner = ora('推送中...').start();
+    spinner = ora('推送中...').start();
     actions.git.push();
     spinner.succeed('推送成功');
   } catch (error) {
+    if (spinner) {
+      spinner.fail('推送失败');
+    }
     log.error(error);
   }
 }
