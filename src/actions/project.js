@@ -6,15 +6,15 @@ function create(name, repo) {
   // const tmpdir = path.join(os.tmpdir(), 'door-cli', name);
   const download = require('download-git-repo');
   return new Promise((resolve, reject) => {
-    download(repo, cwd.get(), { clone: true }, function(err) {
+    download(repo, cwd.get(), { clone: true }, (err) => {
       if (err) {
         return reject(err);
       }
-      resolve();
+      return resolve();
     });
   });
 }
 
 module.exports = {
-  create
+  create,
 };

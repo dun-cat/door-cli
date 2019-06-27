@@ -1,21 +1,28 @@
-#!/usr/bin/env node
+#!/usr/bin / env node
 
-const commander = require('../lib/command');
 const requireDir = require('require-dir');
-const uiConfig = requireDir('../ui-configs');
+
+const uiConfig = requireDir('../src/ui-configs');
 const { prompt, registerPrompt } = require('inquirer');
-const runner = require('../lib/runner');
+const commander = require('../src/lib/command');
+const runner = require('../src/lib/runner');
 
 registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
 registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
 
-commander.init();
-if (commander.argsLength() === 0) {
-  createUI();
-}
 
+async function toolSubMenu() {
+  const step2 = await prompt(uiConfig.tool);
+  switch (step2.answer) {
+    case 'git-init':
+      runner.gitInit();
+      break;
+    default:
+      break;
+  }
+}
 async function createUI() {
-  let step1 = await prompt(uiConfig.menu);
+  const step1 = await prompt(uiConfig.menu);
   switch (step1.answer) {
     case 'commit':
       runner.commit();
@@ -30,15 +37,14 @@ async function createUI() {
       toolSubMenu();
       break;
     case 'help':
+      runner.help();
+      break;
+    default:
       break;
   }
 }
 
-async function toolSubMenu() {
-  let step2 = await prompt(uiConfig.tool);
-  switch (step2.answer) {
-    case 'git-init':
-      runner.gitInit();
-      break;
-  }
+commander.init();
+if (commander.argsLength() === 0) {
+  createUI();
 }

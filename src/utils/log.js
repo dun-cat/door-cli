@@ -1,9 +1,10 @@
 const chalk = require('chalk');
-const log = console.log;
+
+const { log } = console;
 
 function error(msg) {
   if (!msg) return;
-  if (_debug_) {
+  if (global._debug_) {
     log(msg);
     return;
   }
@@ -23,5 +24,5 @@ module.exports = {
   error,
   warn,
   info,
-  success
+  success,
 };

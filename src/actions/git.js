@@ -3,17 +3,19 @@ const log = require('../utils/log');
 const cwd = require('../utils/cwd');
 const { choices } = require('../ui-configs/git');
 
-let _isProjectGit;
+let isProjectGit;
 
-function hasProjectGit(cwd) {
-  if (_isProjectGit != null) {
-    return _isProjectGit;
+function hasProjectGit() {
+  if (isProjectGit != null) {
+    return isProjectGit;
   }
   try {
     execa.sync('git', ['status'], { cwd });
-    return (_isProjectGit = true);
+    isProjectGit = true;
+    return isProjectGit;
   } catch (error) {
-    return (_isProjectGit = false);
+    isProjectGit = false;
+    return isProjectGit;
   }
 }
 
@@ -29,12 +31,12 @@ function init() {
 }
 
 function commit(answers) {
-  const defaultValue = choices.filter(item => answers.type === item.value)[0].defaultValue;
-  let message = `${answers.type}:  ${answers.msg || defaultValue}`;
+  const { defaultValue } = choices.filter(item => answers.type === item.value)[0];
+  const message = `${answers.type}:  ${answers.msg || defaultValue}`;
   try {
     execa.sync('git', ['add', '*'], { cwd: cwd.get() });
-    let result = execa.sync('git', ['commit', '-m', message.replace(/"/, '\\"')], {
-      cwd: cwd.get()
+    const result = execa.sync('git', ['commit', '-m', message.replace(/"/, '\\"')], {
+      cwd: cwd.get(),
     });
     log.info(result.stdout);
   } catch (error) {
@@ -54,5 +56,5 @@ module.exports = {
   hasProjectGit,
   commit,
   push,
-  init
+  init,
 };

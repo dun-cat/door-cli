@@ -3,21 +3,23 @@ const { execSync } = require('child_process');
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org';
 const TAOBAO_REGISTRY = 'https://r.npm.taobao.org';
 
-let _hasYarn;
+let hasYarn;
 
-function hasYarn() {
-  if (_hasYarn != null) {
-    return _hasYarn;
+function hasYarnInstalled() {
+  if (hasYarn != null) {
+    return hasYarn;
   }
   try {
     execSync('yarnpkg --version', { stdio: 'ignore' });
-    return (_hasYarn = true);
+    hasYarn = true;
+    return hasYarn;
   } catch (e) {
-    return (_hasYarn = false);
+    hasYarn = false;
+    return hasYarn;
   }
 }
 
 module.exports = {
   DEFAULT_REGISTRY,
-  TAOBAO_REGISTRY
+  TAOBAO_REGISTRY,
 };

@@ -1,11 +1,12 @@
 const requireDir = require('require-dir');
+
 const uiConfig = requireDir('../ui-configs');
 const actions = requireDir('../actions');
-const cwd = require('../utils/cwd');
 const ora = require('ora');
 const { prompt } = require('inquirer');
-const log = require('../utils/log');
 const { emptyDirSync } = require('fs-extra');
+const log = require('../utils/log');
+const cwd = require('../utils/cwd');
 /**
  * 初始化git
  */
@@ -28,8 +29,8 @@ function gitInit() {
  * @param {object} options 命令行参数
  */
 async function commit(options = {}) {
-  let { hasProjectGit, commit } = actions.git;
-  let { push } = options;
+  const { hasProjectGit, commit } = actions.git;
+  const { push } = options;
   if (!hasProjectGit(cwd.get())) {
     log.error('当前项目不是Git项目');
     return;
@@ -37,11 +38,11 @@ async function commit(options = {}) {
 
   try {
     // commit
-    let step2 = await prompt(uiConfig.git.commit);
+    const step2 = await prompt(uiConfig.git.commit);
     commit(step2);
     // 接受到-p参数，忽略提示，直接push
     if (!push) {
-      let step3 = await prompt(uiConfig.git.push);
+      const step3 = await prompt(uiConfig.git.push);
       if (!step3.next) return;
     }
     const spinner = ora('推送中...').start();
@@ -49,7 +50,6 @@ async function commit(options = {}) {
     spinner.succeed('推送成功');
   } catch (error) {
     log.error(error);
-    return;
   }
 }
 
@@ -73,12 +73,12 @@ function standard() {
  * @param {object} options 命令行参数
  */
 async function createProject(options) {
-  let step2 = await prompt(uiConfig.project.config);
+  const step2 = await prompt(uiConfig.project.config);
   if (!cwd.isEmpty(cwd.get())) {
-    let notEmptyDirCreate = await prompt({
+    const notEmptyDirCreate = await prompt({
       type: 'confirm',
       name: 'is',
-      message: '当前目录含有内容，是否删除内容？'
+      message: '当前目录含有内容，是否删除内容？',
     });
     if (!notEmptyDirCreate.is) {
       log.error('已取消创建');
@@ -88,8 +88,8 @@ async function createProject(options) {
     emptyDirSync(cwd.get());
   }
 
-  let repo = step2.repo;
-  let name = uiConfig.project.choices.filter(_ => _.value === repo)[0].name;
+  const { repo } = step2;
+  const { name } = uiConfig.project.choices.filter(_ => _.value === repo)[0];
   const spinner = ora('创建中...').start();
   try {
     await actions.project.create(name, repo);
@@ -101,9 +101,14 @@ async function createProject(options) {
   spinner.succeed('创建完成！');
 }
 
+function help() {
+  require('../actions/help');
+}
+
 module.exports = {
   gitInit,
   commit,
   standard,
-  createProject
+  createProject,
+  help,
 };
