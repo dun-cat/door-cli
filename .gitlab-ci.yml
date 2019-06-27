@@ -1,0 +1,21 @@
+
+image: node:latest
+
+cache:
+  paths:
+  - node_modules/
+  
+  stages:
+  - lint
+  - codereview
+  
+  lint:
+  stage: lint
+  script:
+  - yarn lint
+  
+  codereview:
+  stage: codereview
+  script: 
+    - yarn install
+    - yarn codereview
