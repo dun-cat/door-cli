@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "./bin/index.js --debug",
-    "lint": "eslint --fix src/**/*.js bin/*"
+    "lint": "eslint --fix src/**/*.js bin/*",
+    "codereview": "jscpd src"
   },
   "repository": {
     "type": "git",

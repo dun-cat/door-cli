@@ -10,23 +10,6 @@ const scaffoldConfigPath = `${os.homedir()}/.door/scaffold.config.json`;
 let choices = [];
 
 /**
- * 下载更新脚手架配置
- */
-function updateScaffoldConfig() {
-  ensureFileSync(scaffoldConfigPath);
-  downloadFile(scaffoldConfigUrl)
-    .then((data) => {
-      data = String(data);
-      const json = JSON.parse(data);
-      choices = getChoices(json);
-      writeJSONSync(scaffoldConfigPath, json);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-
-/**
  * 转换参数名称
  * @param {array} data 脚手架配合列表
  */
@@ -37,6 +20,23 @@ function getChoices(data) {
   });
   return newChoices;
 }
+
+/**
+ * 下载更新脚手架配置
+ */
+function updateScaffoldConfig() {
+  ensureFileSync(scaffoldConfigPath);
+  downloadFile(scaffoldConfigUrl)
+    .then((data) => {
+      const json = JSON.parse(String(data));
+      choices = getChoices(json);
+      writeJSONSync(scaffoldConfigPath, json);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 
 if (existsSync(scaffoldConfigPath)) {
   try {

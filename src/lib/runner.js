@@ -29,7 +29,7 @@ function gitInit() {
  * @param {object} options 命令行参数
  */
 async function commit(options = {}) {
-  const { hasProjectGit, commit } = actions.git;
+  const { hasProjectGit } = actions.git;
   const { push } = options;
   if (!hasProjectGit(cwd.get())) {
     log.error('当前项目不是Git项目');
@@ -39,7 +39,7 @@ async function commit(options = {}) {
   try {
     // commit
     const step2 = await prompt(uiConfig.git.commit);
-    commit(step2);
+    actions.git.commit(step2);
     // 接受到-p参数，忽略提示，直接push
     if (!push) {
       const step3 = await prompt(uiConfig.git.push);
@@ -102,7 +102,7 @@ async function createProject(options) {
 }
 
 function help() {
-  require('../actions/help');
+
 }
 
 module.exports = {

@@ -10,7 +10,7 @@ function hasProjectGit() {
     return isProjectGit;
   }
   try {
-    execa.sync('git', ['status'], { cwd });
+    execa.sync('git', ['status'], { cwd: cwd.get() });
     isProjectGit = true;
     return isProjectGit;
   } catch (error) {
