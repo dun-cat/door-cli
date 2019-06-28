@@ -6,8 +6,14 @@ cache:
   - node_modules/
   
 stages:
+  - install
   - lint
   - codereview
+
+install
+  stage: install
+  script:
+    - yarn install
 
 lint:
   stage: lint
@@ -17,5 +23,5 @@ lint:
 codereview:
   stage: codereview
   script: 
-    - yarn install
+    
     - yarn codereview
