@@ -4,7 +4,7 @@ const runner = require('../lib/runner');
 global._debug_ = false;
 function init() {
   program.version('0.0.1');
-  // 初始化接受参数
+  // 初始接受参数
   program.option('-d, --debug', '输出额外的调试信息');
   // commit
   program
