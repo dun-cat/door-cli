@@ -5,16 +5,16 @@ cache:
   paths:
   - node_modules/
   
-  stages:
+stages:
   - lint
   - codereview
-  
-  lint:
+
+lint:
   stage: lint
   script:
-  - yarn lint
-  
-  codereview:
+    - yarn lint
+
+codereview:
   stage: codereview
   script: 
     - yarn install
