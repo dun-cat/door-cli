@@ -10,7 +10,7 @@ stages:
   - lint
   - codereview
 
-install
+install:
   stage: install
   script:
     - yarn install
