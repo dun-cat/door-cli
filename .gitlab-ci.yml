@@ -18,7 +18,6 @@ install:
 lint:
   stage: lint
   script:
-    - echo "开始eslint校验"
     - yarn lint
 
 codereview:
