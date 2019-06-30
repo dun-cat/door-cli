@@ -1,7 +1,11 @@
 const choices = [
   {
-    name: '📌  Git 初始化',
+    name: 'Git 初始化',
     value: 'git-init',
+  },
+  {
+    name: '创建gitlab项目',
+    value: 'gitlab-init',
   },
 ];
 

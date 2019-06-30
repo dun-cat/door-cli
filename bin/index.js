@@ -1,11 +1,15 @@
 #!/usr/bin/env node
 
 const requireDir = require('require-dir');
+const { prompt, registerPrompt } = require('inquirer');
+const config = require('../src/lib/config');
+
+config.init();
 
 const uiConfig = requireDir('../src/ui-configs');
-const { prompt, registerPrompt } = require('inquirer');
 const commander = require('../src/lib/command');
 const runner = require('../src/lib/runner');
+
 
 registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
 registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
@@ -16,6 +20,9 @@ async function toolSubMenu() {
   switch (step2.answer) {
     case 'git-init':
       runner.gitInit();
+      break;
+    case 'gitlab-init':
+      runner.createGitlabProject();
       break;
     default:
       break;

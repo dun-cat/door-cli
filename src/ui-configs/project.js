@@ -60,4 +60,9 @@ module.exports = {
       choices,
     },
   ],
+  createGitlab: {
+    type: 'confirm',
+    name: 'createGitlab',
+    message: '是否创建Gitlab项目？',
+  },
 };

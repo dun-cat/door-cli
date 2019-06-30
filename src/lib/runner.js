@@ -1,28 +1,18 @@
 const requireDir = require('require-dir');
 
-const uiConfig = requireDir('../ui-configs');
-const actions = requireDir('../actions');
 const ora = require('ora');
 const { prompt } = require('inquirer');
-const { emptyDirSync } = require('fs-extra');
-const log = require('../utils/log');
+const { emptyDirSync, readJSONSync, existsSync } = require('fs-extra');
+const { CONFIG_KEYS } = require('../utils/constant');
+const { save } = require('../lib/config');
+const { getGitlabChoices } = require('../lib/help');
 const cwd = require('../utils/cwd');
-/**
- * 初始化git
- */
-function gitInit() {
-  const { hasProjectGit, init } = actions.git;
-  if (hasProjectGit(cwd.get())) {
-    log.error('已存在git项目！');
-    return;
-  }
-  try {
-    init();
-    log.success('git初始化成功！');
-  } catch (error) {
-    log.error(error);
-  }
-}
+
+const uiConfig = requireDir('../ui-configs');
+const actions = requireDir('../actions');
+const log = require('../utils/log');
+
+const service = requireDir('../service');
 
 /**
  * 提交 git 代码
@@ -105,6 +95,88 @@ async function createProject(options) {
   spinner.succeed('创建完成！');
 }
 
+/**
+ * 创建gitlab项目
+ * @param {object} options 输入参数
+ */
+async function createGitlabProject(options) {
+  const { syncProjectToRemoteGitRepo } = actions.git;
+
+  // Set gitlab access token
+  const {
+    getAccessToken, checkToken, setAccessToken, getNamespaces,
+  } = service.gitlab;
+  try {
+    const token = getAccessToken();
+    await checkToken(token);
+  } catch (err) {
+    await prompt(uiConfig.gitlab.token).then(async (out) => {
+      try {
+        await checkToken(out.token);
+        setAccessToken(out.token);
+        save(CONFIG_KEYS.ACCESS_TOKEN, out.token); // 本地化存储
+      } catch (error) {
+        log.error(`${error.response.status}：${error.response.statusText}`);
+        createGitlabProject.call(this, options);
+      }
+    });
+  }
+  // Namespace
+  const { data } = await getNamespaces();
+  const choices = getGitlabChoices(data);
+  const { namespace } = await prompt({ ...uiConfig.gitlab.namespace, choices });
+
+
+  // Name
+  let projectName = '';
+  const pkgPath = `${cwd.get()}/package.json`;
+  let usePkgName = false;
+  if (existsSync(pkgPath)) {
+    const { usePackageName } = await prompt(uiConfig.gitlab.usePackageName);
+    usePkgName = usePackageName;
+  }
+
+  if (usePkgName) {
+    const { name } = readJSONSync(pkgPath);
+    projectName = name;
+  } else {
+    const { name } = await prompt(uiConfig.gitlab.projectName);
+    projectName = name;
+  }
+
+  let spinner = null;
+  try {
+    spinner = ora('创建中...').start();
+    syncProjectToRemoteGitRepo(namespace, projectName);
+    spinner.succeed('创建成功');
+  } catch (error) {
+    spinner.fail('创建失败');
+    log.error(error);
+  }
+}
+
+/**
+ * 初始化git
+ */
+async function gitInit() {
+  const { hasProjectGit, init } = actions.git;
+  // const { createGitlab}
+  if (hasProjectGit(cwd.get())) {
+    log.error('已存在git项目！');
+    return;
+  }
+  try {
+    init();
+    log.success('git初始化成功！');
+    const createGitlab = await prompt(uiConfig.project.createGitlab);
+    if (createGitlab) {
+      createGitlabProject();
+    }
+  } catch (error) {
+    log.error(error);
+  }
+}
+
 function help() {
 
 }
@@ -114,5 +186,6 @@ module.exports = {
   commit,
   standard,
   createProject,
+  createGitlabProject,
   help,
 };

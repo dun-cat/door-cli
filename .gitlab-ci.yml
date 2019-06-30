@@ -8,7 +8,6 @@ cache:
 stages:
   - install
   - lint
-  - codereview
 
 install:
   stage: install

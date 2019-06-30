@@ -1,4 +1,6 @@
 const execa = require('execa');
+const { copyFileSync, existsSync } = require('fs-extra');
+const { resolve } = require('path');
 const log = require('../utils/log');
 const cwd = require('../utils/cwd');
 const { choices } = require('../ui-configs/git');
@@ -24,6 +26,9 @@ function hasProjectGit() {
  */
 function init() {
   try {
+    if (!existsSync(`${cwd.get()}/.gitignore`)) {
+      copyFileSync(resolve(__dirname, '../template/.gitignore'), `${cwd.get()}/.gitignore`);
+    }
     execa.sync('git', ['init'], { cwd: cwd.get() });
   } catch (error) {
     throw error;
@@ -52,9 +57,18 @@ function push() {
   }
 }
 
+function syncProjectToRemoteGitRepo(namespace, name) {
+  commit({ type: 'feat', msg: '初始化' });
+  execa.sync('git', [
+    'push', '--set-upstream',
+    `http://gitlab.lumin.tech/${namespace}/${name}.git`, 'master',
+  ], { cwd: cwd.get() });
+}
+
 module.exports = {
   hasProjectGit,
   commit,
   push,
   init,
+  syncProjectToRemoteGitRepo,
 };
