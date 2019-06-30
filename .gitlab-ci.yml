@@ -18,8 +18,3 @@ lint:
   stage: lint
   script:
     - yarn lint
-
-codereview:
-  stage: codereview
-  script: 
-    - yarn codereview
