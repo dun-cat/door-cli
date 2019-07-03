@@ -2,6 +2,7 @@ const program = require('commander');
 const runner = require('../lib/runner');
 
 global._debug_ = false;
+
 function init() {
   program.version('0.0.1');
   // 初始接受参数
