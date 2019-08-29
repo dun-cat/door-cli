@@ -1,0 +1,65 @@
+{
+  "name": "door-cli",
+  "version": "0.0.3",
+  "description": "Private CLI tools",
+  "main": "./bin/index.js",
+  "bin": {
+    "door": "./bin/index.js"
+  },
+  "scripts": {
+    "dev": "./bin/index.js --debug",
+    "lint": "eslint --fix src/**/*.js bin/*",
+    "codereview": "jscpd src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.lumin.tech:lumin/door-cli.git"
+  },
+  "keywords": [
+    "cli"
+  ],
+  "author": "lumin",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "download": "^7.1.0",
+    "download-git-repo": "^2.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-react": "^7.14.2",
+    "execa": "^1.0.0",
+    "fs-extra": "^8.0.1",
+    "inquirer": "6.1.0",
+    "inquirer-autocomplete-prompt": "^1.0.1",
+    "inquirer-fuzzy-path": "^2.0.3",
+    "lodash.merge": "^4.6.1",
+    "ora": "^3.4.0",
+    "require-dir": "^1.2.0",
+    "rimraf": "^2.6.3",
+    "shelljs": "^0.8.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^7.5.2",
+    "@commitlint/config-conventional": "^7.5.0",
+    "eslint": "^5.15.2",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "husky": "^1.3.1",
+    "jscpd": "^2.0.15",
+    "lint-staged": "^8.1.5",
+    "validate-commit-msg": "^2.14.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}
