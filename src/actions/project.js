@@ -1,4 +1,3 @@
-const gitlabBaseUrl = 'https://gi-dev.ccrgt.com/api/v4';
 const download = require('download-git-repo');
 const cwd = require('../utils/cwd');
 

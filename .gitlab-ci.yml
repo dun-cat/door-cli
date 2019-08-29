@@ -12,9 +12,9 @@ stages:
 install:
   stage: install
   script:
-    - yarn install
+    - npm install
 
 lint:
   stage: lint
   script:
-    - yarn lint
+    - npm lint
