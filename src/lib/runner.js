@@ -3,8 +3,9 @@ const requireDir = require('require-dir');
 const ora = require('ora');
 const { prompt } = require('inquirer');
 const { emptyDirSync, readJSONSync, existsSync } = require('fs-extra');
+const open = require('open');
 const { CONFIG_KEYS } = require('../utils/constant');
-const { save } = require('../lib/config');
+const { save, config } = require('../lib/config');
 const { getGitlabChoices } = require('../lib/help');
 const cwd = require('../utils/cwd');
 
@@ -95,14 +96,23 @@ async function createProject(options) {
   spinner.succeed('创建完成！');
 }
 
+async function setGitlabHost() {
+  const { gitlabHost } = await prompt(uiConfig.gitlab.gitlabHost);
+  if (gitlabHost) {
+    save(CONFIG_KEYS.GITLAB_HOST, gitlabHost);
+    return Promise.resolve(gitlabHost);
+  }
+  return setGitlabHost();
+}
+
 /**
- * 创建gitlab项目
+ * 创建 gitlab 项目
  * @param {object} options 输入参数
  */
 async function createGitlabProject(options) {
-  const { syncProjectToRemoteGitRepo } = actions.git;
+  const { syncProjectToRemoteGitRepo, hasProjectGit, init } = actions.git;
 
-  // Set gitlab access token
+  // 设置 access token
   const {
     getAccessToken, checkToken, setAccessToken, getNamespaces,
   } = service.gitlab;
@@ -121,13 +131,13 @@ async function createGitlabProject(options) {
       }
     });
   }
-  // Namespace
+  // 设置项目空间
   const { data } = await getNamespaces();
   const choices = getGitlabChoices(data);
   const { namespace } = await prompt({ ...uiConfig.gitlab.namespace, choices });
 
 
-  // Name
+  // 设置项目名称
   let projectName = '';
   const pkgPath = `${cwd.get()}/package.json`;
   let usePkgName = false;
@@ -144,13 +154,19 @@ async function createGitlabProject(options) {
     projectName = name;
   }
 
-  let spinner = null;
+  // 初始化 git
+  if (!hasProjectGit(cwd.get())) init();
+
+  // 设置 gitlab host
+  if (!config[CONFIG_KEYS.GITLAB_HOST]) {
+    await setGitlabHost();
+  }
   try {
-    spinner = ora('创建中...').start();
-    syncProjectToRemoteGitRepo(namespace, projectName);
-    spinner.succeed('创建成功');
+    syncProjectToRemoteGitRepo(config[CONFIG_KEYS.GITLAB_HOST], namespace, projectName);
+    ora().succeed('创建成功');
+    open(`${config[CONFIG_KEYS.GITLAB_HOST]}/${namespace}/${projectName}`);
   } catch (error) {
-    spinner.fail('创建失败');
+    ora().fail('创建失败');
     log.error(error);
   }
 }
@@ -162,12 +178,12 @@ async function gitInit() {
   const { hasProjectGit, init } = actions.git;
   // const { createGitlab}
   if (hasProjectGit(cwd.get())) {
-    log.error('已存在git项目！');
+    log.error('已存在Git项目！');
     return;
   }
   try {
     init();
-    log.success('git初始化成功！');
+    log.success('Git初始化成功！');
     const createGitlab = await prompt(uiConfig.project.createGitlab);
     if (createGitlab) {
       createGitlabProject();

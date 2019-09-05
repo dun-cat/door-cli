@@ -57,12 +57,16 @@ function push() {
   }
 }
 
-function syncProjectToRemoteGitRepo(namespace, name) {
-  commit({ type: 'feat', msg: '初始化' });
-  execa.sync('git', [
-    'push', '--set-upstream',
-    `http://gitlab.lumin.tech/${namespace}/${name}.git`, 'master',
-  ], { cwd: cwd.get() });
+async function syncProjectToRemoteGitRepo(host, namespace, name) {
+  try {
+    commit({ type: 'feat', msg: '初始化' });
+    execa.sync('git', [
+      'push', '--set-upstream',
+      `${host}/${namespace}/${name}.git`, 'master',
+    ], { cwd: cwd.get() });
+  } catch (error) {
+    throw error;
+  }
 }
 
 module.exports = {

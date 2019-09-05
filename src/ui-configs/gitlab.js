@@ -25,4 +25,11 @@ module.exports = {
       message: '请输入项目名称：',
     },
   ],
+  gitlabHost: [
+    {
+      type: 'input',
+      name: 'gitlabHost',
+      message: '请输入 gitlab host：',
+    },
+  ],
 };

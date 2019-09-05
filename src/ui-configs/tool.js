@@ -4,7 +4,7 @@ const choices = [
     value: 'git-init',
   },
   {
-    name: '创建gitlab项目',
+    name: '创建 Gitlab 项目',
     value: 'gitlab-init',
   },
 ];

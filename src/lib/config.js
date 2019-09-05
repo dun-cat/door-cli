@@ -8,7 +8,7 @@ const log = require('../utils/log');
 const { setAccessToken } = require('../service/gitlab');
 
 const configPath = `${os.homedir()}/.door/config.json`;
-let config = null;
+let config = {};
 
 function init() {
   try {
@@ -17,7 +17,7 @@ function init() {
       // 配置模板
       copyFileSync(resolve(__dirname, '../template/config.json'), configPath);
     }
-    config = readJSONSync(configPath);
+    config = Object.assign(config, readJSONSync(configPath));
     setAccessToken(config.access_token);
   } catch (error) {
     log.error(error);
@@ -42,5 +42,5 @@ function save(key, value) {
 
 
 module.exports = {
-  save, init,
+  save, init, config,
 };
