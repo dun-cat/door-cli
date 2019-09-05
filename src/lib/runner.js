@@ -156,7 +156,7 @@ async function createGitlabProject(options) {
 }
 
 /**
- * 初始化git
+ * 初始化 git
  */
 async function gitInit() {
   const { hasProjectGit, init } = actions.git;
