@@ -14,6 +14,7 @@ function init() {
   try {
     if (!existsSync(configPath)) {
       ensureFileSync(configPath);
+      // 配置模板
       copyFileSync(resolve(__dirname, '../template/config.json'), configPath);
     }
     config = readJSONSync(configPath);
@@ -23,6 +24,11 @@ function init() {
   }
 }
 
+/**
+ * 设置配置文件键值对
+ * @param {string} key json key
+ * @param {string|number} value json value
+ */
 function save(key, value) {
   try {
     if (config[key] !== value) {
