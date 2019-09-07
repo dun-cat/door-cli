@@ -30,8 +30,8 @@ const addConfig = {
 function setup() {
   const configPath = `${cwd.get()}/package.json`;
   if (!existsSync(configPath)) {
-    log.error('未找到 package.json 文件');
-    return;
+    // log.error('未找到 package.json 文件');
+    throw new Error('未找到 package.json 文件');
   }
   // Merge package.json
   const config = readJsonSync(configPath);
