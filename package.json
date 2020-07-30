@@ -9,8 +9,7 @@
   "scripts": {
     "i": "npm install . -g",
     "dev": "./bin/index.js --debug",
-    "lint": "eslint --fix src/**/*.js bin/*",
-    "codereview": "jscpd src"
+    "lint": "eslint --fix src/**/*.js bin/*"
   },
   "repository": {
     "type": "git",

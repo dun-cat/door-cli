@@ -131,6 +131,12 @@ async function createGitlabProject(options) {
       }
     });
   }
+
+  // 设置 gitlab host
+  if (!config[CONFIG_KEYS.GITLAB_HOST]) {
+    await setGitlabHost();
+  }
+
   // 设置项目空间
   const { data } = await getNamespaces();
   const choices = getGitlabChoices(data);
@@ -156,11 +162,6 @@ async function createGitlabProject(options) {
 
   // 初始化 git
   if (!hasProjectGit(cwd.get())) init();
-
-  // 设置 gitlab host
-  if (!config[CONFIG_KEYS.GITLAB_HOST]) {
-    await setGitlabHost();
-  }
   try {
     syncProjectToRemoteGitRepo(config[CONFIG_KEYS.GITLAB_HOST], namespace, projectName);
     ora().succeed('创建成功');
