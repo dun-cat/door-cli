@@ -47,7 +47,7 @@ if (existsSync(scaffoldConfigPath)) {
     console.log(error);
   }
 }
-updateScaffoldConfig();
+// updateScaffoldConfig();
 
 
 module.exports = {
