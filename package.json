@@ -1,6 +1,6 @@
 {
   "name": "door-cli",
-  "version": "0.0.3",
+  "version": "0.0.9",
   "description": "Private CLI tools",
   "main": "./bin/index.js",
   "bin": {
@@ -9,7 +9,9 @@
   "scripts": {
     "i": "npm install . -g",
     "dev": "./bin/index.js --debug",
-    "lint": "eslint --fix src/**/*.js bin/*"
+    "lint": "eslint --fix src/**/*.js bin/*",
+    "pub": "npm run updateVersion && npm publish --access=public",
+    "updateVersion": "npm --no-git-tag-version version patch"
   },
   "repository": {
     "type": "git",
